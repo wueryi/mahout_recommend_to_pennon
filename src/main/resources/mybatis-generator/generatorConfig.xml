@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- 配置生成器 -->
+<generatorConfiguration>
+    <!--执行generator插件生成文件的命令： call mvn mybatis-generator:generate -e -->
+
+    <!-- 引入配置文件 -->
+    <properties resource="mybatis-generator/mybatisGenerator.properties"/>
+
+    <!--classPathEntry:数据库的JDBC驱动,换成你自己的驱动位置 可选 -->
+<!--    <classPathEntry location="/Users/jishuai/development/java/pennon.handinhand/src/main/resources/mybatis-generator/mysql-connector-java-5.1.24.jar" />-->
+
+    <!-- 一个数据库一个context -->
+    <!--defaultModelType="flat" 大数据字段，不分表 -->
+    <context id="handinhand" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表；一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖 -->
+        <property name="autoDelimitKeywords" value="true"/>
+
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="utf-8"/>
+
+        <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+        <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+
+        <!-- 注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="false"/><!-- 是否取消注释 -->
+            <property name="suppressDate" value="true"/> <!-- 是否生成注释代时间戳-->
+        </commentGenerator>
+
+        <!-- jdbc连接 -->
+        <jdbcConnection driverClass="${jdbc_driver}" connectionURL="${jdbc_url}" userId="${jdbc_user}"
+                        password="${jdbc_password}">
+            <!--MySQL 不支持 schema 或者 catalog 所以需要添加这个-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类地址 -->
+        <javaModelGenerator targetPackage="pennon.handinhand.entity" targetProject="${project}">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- sql mapper 映射配置文件 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="${resources}">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- mybatis3中的mapper接口 -->
+        <javaClientGenerator targetPackage="pennon.handinhand.dao" targetProject="${project}" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- 数据表进行生成操作 schema:相当于库名; tableName:表名; domainObjectName:对应的DO -->
+<!--        <table tableName="v9_news_banner" mapperName="BannerMapper" domainObjectName="Banner">-->
+<!--            <property name="useActualColumnNames" value="false"/>-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="ratings" mapperName="RatingsMapper" domainObjectName="Ratings">-->
+<!--            <property name="useActualColumnNames" value="false"/>-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="v9_news" mapperName="NewsMapper" domainObjectName="News">-->
+<!--            <property name="useActualColumnNames" value="false"/>-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="preference" mapperName="PreferenceMapper" domainObjectName="Preference">-->
+<!--            <property name="useActualColumnNames" value="false"/>-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--            <columnOverride column="is_updated" javaType="Integer"/>-->
+<!--        </table>-->
+        <table tableName="preference_log" mapperName="PreferenceLogMapper" domainObjectName="PreferenceLog">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="is_updated" javaType="Integer"/>
+        </table>
+    </context>
+</generatorConfiguration>

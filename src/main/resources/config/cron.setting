@@ -1,0 +1,2 @@
+[pennon.handinhand.bo]
+PreferenceUpdateJob.run = */10 * * * * *
